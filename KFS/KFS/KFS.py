@@ -1,5 +1,5 @@
 import pickle
-l = ('abc','defg','hijk','lmno','pqrs','tuvw','xyza','bcd','efg')
+l = ['abc','defg','hijk','lmno','pqrs','tuvw','xyza','bcd','efg']
 class FileRWTester:
      def ReadWrite(self):    
         name = raw_input("File name with path: ")
@@ -12,6 +12,7 @@ class FileRWTester:
             print u
             for word in u:
                 print word
+            print Ellipsis > 1
         r.closed
 
 fi = FileRWTester()
