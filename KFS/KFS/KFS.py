@@ -13,6 +13,7 @@ class FileRWTester:
             for word in u:
                 print word
             print Ellipsis > 1
+            print "The %(foo)s is %(bar)i." % {'foo': 'answer', 'bar':42} 
         r.closed
 
 fi = FileRWTester()
