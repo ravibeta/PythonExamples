@@ -16,9 +16,15 @@ class FileRWTester:
             print "The %(foo)s is %(bar)i." % {'foo': 'answer', 'bar':42} 
         r.closed
 
-fi = FileRWTester()
-fi.ReadWrite()
-
+try:
+    fi = FileRWTester()
+    fi.ReadWrite()
+except e:
+   print e
+else: 
+   print "Read Write over"
+finally:
+    print "Done"
 
 
 
