@@ -16,6 +16,11 @@ class FileRWTester:
                 print index, item
             print Ellipsis > 1
             print "The %(foo)s is %(bar)i." % {'foo': 'answer', 'bar':42} 
+        def double(L):
+            for x in L:
+                yield x*2
+        items = list(double([1,2,3,4,5]))
+        print items
         r.closed
 
 try:
