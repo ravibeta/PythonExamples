@@ -15,6 +15,8 @@ class FileRWTester:
             for index,item in enumerate(l):
                 print index, item
             print Ellipsis > 1
+            positions = [[col + row * 3 for col in range(3)] for row in range(3)]
+            print positions
             print "The %(foo)s is %(bar)i." % {'foo': 'answer', 'bar':42} 
         def double(L):
             for x in L:
