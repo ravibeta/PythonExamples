@@ -1,4 +1,6 @@
 import pickle
+import sys
+
 l = ('abc','defg','hijk','lmno','pqrs','tuvw','xyza','bcd','efg')
 class FileRWTester:
      def ReadWrite(self):    
@@ -78,19 +80,21 @@ m = inorder(n[5])
 i.append(m.next())
 i.append(m.send(Node(1)))
 i.append(m.next())
-''' for x in m():
-    i.append(x)
-'''
 
+
+j = {'aaabbbccc':1, 'dddeeefff':2, 'ggghhhiii':3, 'dddeeefff':4, 'xxxyyyzzz':5}
 
 try:
     fi = FileRWTester()
     fi.ReadWrite()
     print dfs(n[5])
     print i
-except e:
-   print e
+    for m in range(3):
+        print m, i[m]
+except :
+   print "UnexpectedError:", sys.exc_info()[0]
 else: 
    print "Read Write over"
 finally:
     print "Done"
+
