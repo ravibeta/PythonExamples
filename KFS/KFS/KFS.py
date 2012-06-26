@@ -74,8 +74,13 @@ def inorder(root):
         for x in inorder(root.r):
             yield x
 i = []
-for x in inorder(n[5]):
+m = inorder(n[5])
+i.append(m.next())
+i.append(m.send(Node(1)))
+i.append(m.next())
+''' for x in m():
     i.append(x)
+'''
 
 
 try:
