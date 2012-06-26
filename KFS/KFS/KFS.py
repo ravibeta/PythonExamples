@@ -25,15 +25,67 @@ class FileRWTester:
         print items
         r.closed
 
+
+
+
+'''
+                5
+        3           9
+    2       4   7       10
+1              6    8
+'''
+class Node:
+    def __init__(self, data, l = None, r = None):
+        self.l = l
+        self.r = r
+        self.data = data
+
+    def __unicode__(self):
+        return '%s' % self.data
+
+n = []
+
+for i in range(11):
+    n.append(Node(i))
+
+n[5].l = n[3]
+n[5].r = n[9]
+n[3].l = n[2]
+n[3].r = n[4]
+n[9].l = n[7]
+n[9].r = n[10]
+n[2].l = n[1]
+n[7].l = n[6]
+n[7].r = n[8]
+
+def dfs(tree):
+    nodes = []
+    if (tree != None):
+        nodes.append(tree.data)
+        nodes.extend(dfs(tree.l))
+        nodes.extend(dfs(tree.r))
+    return nodes
+
+def inorder(root):
+    if root:
+        for x in inorder(root.l):
+            yield x
+        yield root.data
+        for x in inorder(root.r):
+            yield x
+i = []
+for x in inorder(n[5]):
+    i.append(x)
+
+
 try:
     fi = FileRWTester()
     fi.ReadWrite()
+    print dfs(n[5])
+    print i
 except e:
    print e
 else: 
    print "Read Write over"
 finally:
     print "Done"
-
-
-
