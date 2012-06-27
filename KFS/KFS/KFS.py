@@ -1,5 +1,6 @@
 import pickle
 import sys
+import os
 
 l = ('abc','defg','hijk','lmno','pqrs','tuvw','xyza','bcd','efg')
 class FileRWTester:
@@ -81,17 +82,35 @@ i.append(m.next())
 i.append(m.send(Node(1)))
 i.append(m.next())
 
+def indexall(t, value):
+     pos = -1
+     try:
+         while True:
+            pos = t.index(value, pos+1)
+            yield pos
+     except ValueError:
+         pass
 
-j = {'aaabbbccc':1, 'dddeeefff':2, 'ggghhhiii':3, 'dddeeefff':4, 'xxxyyyzzz':5}
+
 
 
 try:
-    fi = FileRWTester()
-    fi.ReadWrite()
+    '''fi = FileRWTester()
+    fi.ReadWrite()'''
     print dfs(n[5])
     print i
     for m in range(3):
         print m, i[m]
+    j = {'aaabbbccc':1, 'dddeeefff':2, 'ggghhhiii':3, 'dddeeefff':4, 'xxxyyyzzz':5}
+    '''l = OrderedDict(sorted(j.items(), key  = lambda t:t[0]))'''
+    h = sorted(j.items(),key = lambda t:t[0])
+    print h
+    ix = list(indexall(j.keys(), 'dddeeefff'))
+    print ix
+    str = 'aaabbbcccdddeeefffggghhhiiidddeeefffxxxyyyzzz'
+    ix2 = list(indexall(str,'d'))
+    print ix2
+    print os.listdir('c:\\a')
 except :
    print "UnexpectedError:", sys.exc_info()[0]
 else: 
