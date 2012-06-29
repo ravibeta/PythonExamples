@@ -101,6 +101,10 @@ try:
     print i
     for m in range(3):
         print m, i[m]
+        if ( i == 3):
+            break
+    else:
+        print("i was never 3")
     j = {'aaabbbccc':1, 'dddeeefff':2, 'ggghhhiii':3, 'dddeeefff':4, 'xxxyyyzzz':5}
     '''l = OrderedDict(sorted(j.items(), key  = lambda t:t[0]))'''
     h = sorted(j.items(),key = lambda t:t[0])
