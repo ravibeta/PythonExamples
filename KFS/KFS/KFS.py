@@ -114,6 +114,8 @@ try:
     str = 'aaabbbcccdddeeefffggghhhiiidddeeefffxxxyyyzzz'
     ix2 = list(indexall(str,'d'))
     print ix2
+    str2 = [x for x in str.capitalize() if x == 'A']
+    print str2
     print os.listdir('c:\\a')
 except :
    print "UnexpectedError:", sys.exc_info()[0]
