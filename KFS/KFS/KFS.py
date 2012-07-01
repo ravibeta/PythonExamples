@@ -21,11 +21,6 @@ class FileRWTester:
             positions = [[col + row * 3 for col in range(3)] for row in range(3)]
             print positions
             print "The %(foo)s is %(bar)i." % {'foo': 'answer', 'bar':42} 
-        def double(L):
-            for x in L:
-                yield x*2
-        items = list(double([1,2,3,4,5]))
-        print items
         r.closed
 
 
@@ -109,7 +104,8 @@ try:
     '''l = OrderedDict(sorted(j.items(), key  = lambda t:t[0]))'''
     h = sorted(j.items(),key = lambda t:t[0])
     print h
-    ix = list(indexall(j.keys(), 'dddeeefff'))
+    args = (j.keys(), 'dddeeefff')
+    ix = list(indexall(*args))
     print ix
     str = 'aaabbbcccdddeeefffggghhhiiidddeeefffxxxyyyzzz'
     ix2 = list(indexall(str,'d'))
@@ -118,6 +114,12 @@ try:
     print str2
     print("The string is {foo} with {bar} letter".format(foo=str, bar=45)) 
     print os.listdir('c:\\a')
+    def double(L):
+        for x in L:
+            yield x*2
+    items = list(double([1,2,3,4,5]))
+    print items
+
 except :
    print "UnexpectedError:", sys.exc_info()[0]
 else: 
