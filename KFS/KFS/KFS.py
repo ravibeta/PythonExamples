@@ -24,7 +24,11 @@ class FileRWTester:
         r.closed
 
 
-
+def print_args(function): 
+    def wrapper(*args, **kwargs): 
+        print 'Arguments:', args, kwargs 
+        return function(*args, **kwargs) 
+    return wrapper 
 
 '''
                 5
@@ -56,6 +60,7 @@ n[2].l = n[1]
 n[7].l = n[6]
 n[7].r = n[8]
 
+@print_args
 def dfs(tree):
     nodes = []
     if (tree != None):
@@ -64,6 +69,7 @@ def dfs(tree):
         nodes.extend(dfs(tree.r))
     return nodes
 
+@print_args
 def inorder(root):
     if root:
         for x in inorder(root.l):
@@ -77,6 +83,7 @@ i.append(m.next())
 i.append(m.send(Node(1)))
 i.append(m.next())
 
+@print_args
 def indexall(t, value):
      pos = -1
      try:
