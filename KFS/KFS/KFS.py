@@ -23,12 +23,21 @@ class FileRWTester:
             print "The %(foo)s is %(bar)i." % {'foo': 'answer', 'bar':42} 
         r.closed
 
+class Property(object):
+    def __init__(self, fget):
+        self.fget = fget
+ 
+    def __get__(self, obj, type):
+        if obj is None:
+            return self
+        return self.fget(obj)
 
-def print_args(function): 
-    def wrapper(*args, **kwargs): 
-        print 'Arguments:', args, kwargs 
-        return function(*args, **kwargs) 
-    return wrapper 
+def print_args(function):
+    def wrapper(*args, **kwargs):
+        print 'Arguments:', args, kwargs
+        return function(*args, **kwargs)
+    return wrapper
+
 
 '''
                 5
@@ -44,7 +53,10 @@ class Node:
 
     def __unicode__(self):
         return '%s' % self.data
-
+    @Property 
+    def value(self): 
+        return self.data
+     
 n = []
 
 for i in range(11):
