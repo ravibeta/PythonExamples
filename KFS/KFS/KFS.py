@@ -133,6 +133,7 @@ try:
     print str2
     print str[::-1] 
     print str[::2]
+    print str[1:5:2]
     print("The string is {foo} with {bar} letter".format(foo=str, bar=45)) 
     print os.listdir('c:\\a')
     def double(L):
