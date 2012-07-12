@@ -140,11 +140,14 @@ try:
         print item
     print("The string is {foo} with {bar} letter".format(foo=str, bar=45)) 
     print os.listdir('c:\\a')
-    def double(L):
-        for x in L:
-            yield x*2
-    items = list(double([1,2,3,4,5]))
+    items = list([1,2,3,4,5])
     print items
+    def foo(x=None): 
+        if x is None: 
+            x = [] 
+        x.append(1) 
+        print x 
+    foo() 
 
 except :
    print "UnexpectedError:", sys.exc_info()[0]
