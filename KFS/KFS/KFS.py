@@ -147,7 +147,8 @@ try:
             x = [] 
         x.append(1) 
         print x 
-    foo() 
+    for i in range(5):
+        foo([0]) 
 
 except :
    print "UnexpectedError:", sys.exc_info()[0]
