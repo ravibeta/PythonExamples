@@ -64,19 +64,34 @@ def threshold(histogram):
 
 summarize('Clustering and Segmentation. Clustering is a data mining technique that is directed towards the goals of identification and classification. Clustering tries to identify a finite set of categories or clusters to which each data object (tuple) can be mapped. The categories may be disjoint or overlapping and may sometimes be organized into trees. For example, one might form categories of customers into the form of a tree and then map each customer to one or more of the categories. A closely related problem is that of estimating multivariate probability density functions of all variables that could be attributes in a relation or from different relations.')
 
-def bayesClassify(text, trainer):
+def bayesClassify(text, category, trainer):
     words = textmining.simple_tokenize(text)
-    wps = calcWordsProbability(words, trainer)
+    wps = calcWordsProbability(words, category, trainer)
     return normalizeSignificance(calculateOverallProbability(wps))
 
-def calcWordsProbability(words, trainer):
-    wps = [trainer[w.tolower()] for w in words if isClassifiable(w)]
-    return wps;
+def calcWordsProbability(words, category, trainer):
+    wps = open('wordprobability.txt').read()
+    return [getWordProbability(wps, w, category) for w in words if isClassifiable(w)]
 
 def isClassifiable(word):
     text = open('stopwords.txt').read()
     stopwords = textmining.simple_tokenize(text)
     return w not in stopwords
+
+def getWordProbability(wps, word, category):
+    if (category):
+        table = open('wordcategory.txt').read()
+        matchingCount = 0
+        nonmatchingCount = 0
+        if word in table:
+            return (table[word][probability], table[word][matchingCount], table[word][nonmatchingCount])
+        else:
+            table.append(word, category, 0.99, matchingCount, nonmatchingCount)
+    else:
+        if word in wps:
+            return wps[word]
+        else:
+            return 0.99
 
 def calculateOverallProbability(wps):
     # we calculate xy/(xy + z) where z = (1 - x)(1 - y)
@@ -104,3 +119,30 @@ def normalizeSignificance(p):
     return p
 
 # Bayes ported from Ryan Whitaker
+
+def teachMatch(category, words, wds):
+    for word in words:
+        if isClassifiable(word):
+            addMatch(wds, category, word.tolower()) 
+
+def teachNonMatch(category, words, wds):
+    for word in words:
+        if isClassifiable(word):
+            addNonMatch(wds, category, word.tolower()) 
+
+def addMatch(wds, category, word):
+   return updateWordProbabilty(category, word, true)
+
+def addMatch(wds, category, word):
+   return updateWordProbabilty(category, word, false)
+
+def updateWordProbabilty(category, word, isMatch):
+    table = open('wordcategory.txt').read()
+    if word in table:
+        if (isMatch):
+            table[word][matchCount] += 1
+        else:
+            table[word][nonmatchCount] += 1
+    else:
+        table.append(word, category, matchCount, nonMatchCount)
+
