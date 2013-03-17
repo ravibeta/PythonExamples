@@ -103,3 +103,4 @@ def normalizeSignificance(p):
         return 0.01
     return p
 
+# Bayes ported from Ryan Whitaker
