@@ -63,3 +63,43 @@ def threshold(histogram):
 
 
 summarize('Clustering and Segmentation. Clustering is a data mining technique that is directed towards the goals of identification and classification. Clustering tries to identify a finite set of categories or clusters to which each data object (tuple) can be mapped. The categories may be disjoint or overlapping and may sometimes be organized into trees. For example, one might form categories of customers into the form of a tree and then map each customer to one or more of the categories. A closely related problem is that of estimating multivariate probability density functions of all variables that could be attributes in a relation or from different relations.')
+
+def bayesClassify(text, trainer):
+    words = textmining.simple_tokenize(text)
+    wps = calcWordsProbability(words, trainer)
+    return normalizeSignificance(calculateOverallProbability(wps))
+
+def calcWordsProbability(words, trainer):
+    wps = [trainer[w.tolower()] for w in words if isClassifiable(w)]
+    return wps;
+
+def isClassifiable(word):
+    text = open('stopwords.txt').read()
+    stopwords = textmining.simple_tokenize(text)
+    return w not in stopwords
+
+def calculateOverallProbability(wps):
+    # we calculate xy/(xy + z) where z = (1 - x)(1 - y)
+    z = 0
+    xy = 0
+    for index,wp in enumerable(wps):
+        if z == 0:
+            z = 1-wp[1]
+        else:
+            z = z * (1-wp[1])
+        if (xy == 0):
+            xy = wp[1]
+        else:
+            xy = xy * wp[1]
+    if (xy + z) != 0:
+        return xy / (xy + z)
+    else:
+        return 0
+   
+def normalizeSignificance(p):
+    if (0.99 < p):
+        return 0.99
+    if (0.01 > p):
+        return 0.01
+    return p
+
