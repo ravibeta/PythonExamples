@@ -30,14 +30,33 @@ def summarize(text):
     freq.sort(reverse=True)
     most_freq_words = freq[:10]
     summary = []
-    for w in most_freq_words:
-        for index, line in enumerate(lines):
+    histogram = []
+    for index, line in enumerate(lines):
+        count = 0
+        for w in most_freq_words:
             if line.find(w[0]) != -1:
-                summary.append((index, line))
+                count += 1
+        histogram.append((count,index))
+    histogram.sort(reverse=True)
+    rowcount = threshold(histogram)
+    summary = [(index, line) for index, line in enumerate(lines) if index < rowcount]
+                #summary.append((index, line))
     summary.sort()
-    ret = ''
-    for index, line in enumerate(summary):
-        print '.'.join(line[1])
+    ret = [line[1] for line in summary]
+    print '.'.join(ret)
     return ret
+
+def threshold(histogram):
+    total = 0
+    for count in histogram:
+        total += count[0]
+    sum = 0
+    threshold = 0
+    for count in histogram:
+      if (sum < total /2 ):
+        sum += count[0]
+        threshold += 1
+    return threshold
+
 
 summarize('Clustering and Segmentation. Clustering is a data mining technique that is directed towards the goals of identification and classification. Clustering tries to identify a finite set of categories or clusters to which each data object (tuple) can be mapped. The categories may be disjoint or overlapping and may sometimes be organized into trees. For example, one might form categories of customers into the form of a tree and then map each customer to one or more of the categories. A closely related problem is that of estimating multivariate probability density functions of all variables that could be attributes in a relation or from different relations.')
