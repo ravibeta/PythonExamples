@@ -14,3 +14,30 @@ def tdm_example(text):
     tdm.add_doc(text)
     for row in tdm.rows(cutoff=1):
         print row
+
+def summarize(text):
+    lines = text.split('.')
+    clean_lines = [line.strip() for line in lines if line.strip()]
+    newtext =  '\n'.join(clean_lines)
+    tdm = textmining.TermDocumentMatrix()
+    tdm.add_doc(newtext)
+    for index,row in enumerate(tdm.rows(cutoff=1)):
+        if index == 0 : words = row
+        if index == 1 : count = row
+    text = open('stopwords.txt').read()
+    stopwords = textmining.simple_tokenize(text)
+    freq = [(w, count[index]) for index, w in enumerate(words) if w not in stopwords]
+    freq.sort(reverse=True)
+    most_freq_words = freq[:10]
+    summary = []
+    for w in most_freq_words:
+        for index, line in enumerate(lines):
+            if line.find(w[0]) != -1:
+                summary.append((index, line))
+    summary.sort()
+    ret = ''
+    for index, line in enumerate(summary):
+        print '.'.join(line[1])
+    return ret
+
+summarize('Clustering and Segmentation. Clustering is a data mining technique that is directed towards the goals of identification and classification. Clustering tries to identify a finite set of categories or clusters to which each data object (tuple) can be mapped. The categories may be disjoint or overlapping and may sometimes be organized into trees. For example, one might form categories of customers into the form of a tree and then map each customer to one or more of the categories. A closely related problem is that of estimating multivariate probability density functions of all variables that could be attributes in a relation or from different relations.')
