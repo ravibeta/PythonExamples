@@ -87,7 +87,7 @@ def getWordProbability(wps, word, category):
             return (table[word][probability], table[word][matchingCount], table[word][nonmatchingCount])
         else:
             table.append(word, category, 0.99, matchingCount, nonmatchingCount)
-            open('wordcategory.txt').write((table[word][probability], table[word][matchingCount], table[word][nonmatchingCount]));
+            open('wordcategory.txt').write(str((table[word][probability], table[word][matchingCount], table[word][nonmatchingCount])));
     else:
         if word in wps:
             return wps[word]
