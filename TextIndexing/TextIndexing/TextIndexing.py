@@ -33,7 +33,6 @@ def summarize(text):
     h = histogram(lines, most_freq_words)
     rowcount = threshold(h)
     summary = [(index, line) for index, line in enumerate(lines) if index < rowcount]
-                #summary.append((index, line))
     summary.sort()
     ret = [line[1] for line in summary]
     print '.'.join(ret)
