@@ -1,4 +1,4 @@
-import textmining
+Yimport textmining
 import os
 
 def bigrams(text):
@@ -16,6 +16,7 @@ def tdm_example(text):
         print row
 
 def summarize(text):
+# prepare text
     lines = text.split('.')
     clean_lines = [line.strip() for line in lines if line.strip()]
     newtext =  '\n'.join(clean_lines)
@@ -24,10 +25,12 @@ def summarize(text):
     for index,row in enumerate(tdm.rows(cutoff=1)):
         if index == 0 : words = row
         if index == 1 : count = row
+    # filter stop words 
     text = open('stopwords.txt').read()
     stopwords = textmining.simple_tokenize(text)
     freq = [(w, count[index]) for index, w in enumerate(words) if w not in stopwords]
     freq.sort(reverse=True)
+    # Concordance
     most_freq_words = freq[:10]
     summary = []
     h = histogram(lines, most_freq_words)
