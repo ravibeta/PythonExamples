@@ -1,4 +1,4 @@
-Yimport textmining
+import textmining
 import os
 
 def bigrams(text):
@@ -149,4 +149,21 @@ def updateWordProbabilty(category, word, isMatch):
             table[word][nonmatchCount] += 1
     else:
         table.append(word, category, matchCount, nonMatchCount)
+
+def indexText(text):
+# prepare text
+    lines = text.split('.')
+    clean_lines = [line.strip() for line in lines if line.strip()]
+    newtext =  '\n'.join(clean_lines)
+    words = textmining.simple_tokenize(newtext)
+    p = PorterStemmer()    
+    # filter stop words 
+    text = open('stopwords.txt').read()
+    stopwords = textmining.simple_tokenize(text)
+    # use stemming
+    freq = [(p.stem(w, 0,len(w)-1), count[index]) for index, p.stem(w, 0,len(w)-1) in enumerate(words) if p.stem(w, 0,len(w)-1) not in stopwords]
+    freq.sort(reverse=True)
+    # Concordance
+    most_freq_words = freq[:10]
+    print ' '.join(most_freq_words)
 
