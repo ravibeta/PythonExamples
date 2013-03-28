@@ -149,3 +149,4 @@ def updateWordProbabilty(category, word, isMatch):
             table[word][nonmatchCount] += 1
     else:
         table.append(word, category, matchCount, nonMatchCount)
+
