@@ -64,8 +64,6 @@ def threshold(histogram):
         threshold += 1
     return threshold
 
-summarize('Clustering and Segmentation. Clustering is a data mining technique that is directed towards the goals of identification and classification. Clustering tries to identify a finite set of categories or clusters to which each data object (tuple) can be mapped. The categories may be disjoint or overlapping and may sometimes be organized into trees. For example, one might form categories of customers into the form of a tree and then map each customer to one or more of the categories. A closely related problem is that of estimating multivariate probability density functions of all variables that could be attributes in a relation or from different relations.')
-
 
 def bayesClassify(text, category, trainer):
     words = textmining.simple_tokenize(text)
@@ -149,3 +147,34 @@ def updateWordProbabilty(category, word, isMatch):
             table[word][nonmatchCount] += 1
     else:
         table.append(word, category, matchCount, nonMatchCount)
+
+import stemmer
+import operator 
+def indexText(text):
+# prepare text
+    lines = text.split('.')
+    clean_lines = [line.strip() for line in lines if line.strip()]
+    newtext =  '\n'.join(clean_lines)
+    words = textmining.simple_tokenize(newtext)
+    p = stemmer.PorterStemmer()
+    # filter stop words 
+    text = open('stopwords.txt').read()
+    stopwords = textmining.simple_tokenize(text)
+    # use stemming
+    stemmed = []
+    freq = {}
+    occur = {}
+    for index, w in enumerate(words):
+        stem = p.stem(w, 0, len(w)-1)
+        stemmed.append(stem)
+        if stem not in stopwords:
+            freq[stem] = stemmed.count(stem)
+            occur[stem] = w
+    sorted_freq = sorted(freq.iteritems(), key=operator.itemgetter(1), reverse=True)
+    # Concordance
+    most_freq_words = sorted_freq[:1]
+    print "------Index-----"
+    print occur[most_freq_words.pop()[0]]
+    print "----------------"
+
+indexText('Clustering and Segmentation. Clustering is a data mining technique that is directed towards the goals of identification and classification. Clustering tries to identify a finite set of categories or clusters to which each data object (tuple) can be mapped. The categories may be disjoint or overlapping and may sometimes be organized into trees. For example, one might form categories of customers into the form of a tree and then map each customer to one or more of the categories. A closely related problem is that of estimating multivariate probability density functions of all variables that could be attributes in a relation or from different relations.')
