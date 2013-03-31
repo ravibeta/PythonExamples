@@ -149,7 +149,8 @@ def updateWordProbabilty(category, word, isMatch):
         table.append(word, category, matchCount, nonMatchCount)
 
 import stemmer
-import operator 
+import operator
+import nltk
 def indexText(text):
 # prepare text
     lines = text.split('.')
