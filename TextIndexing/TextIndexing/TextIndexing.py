@@ -152,7 +152,7 @@ import stemmer
 import operator
 import nltk
 def indexText(text):
-# prepare text
+    # prepare text
     lines = text.split('.')
     clean_lines = [line.strip() for line in lines if line.strip()]
     newtext =  '\n'.join(clean_lines)
