@@ -199,9 +199,25 @@ indexText('Clustering and Segmentation. Clustering is a data mining technique th
 #                            'NNS'
 #
 
-#
-import nltk
-import nltk.corpus
-from nltk.corpus import *
-cfd = nltk.ConditionalFreqDist(brown.tagged_words(categories='news'))
-most_freq_words = fd.keys()[:100]
+# 
+
+#import nltk
+#import nltk.corpus
+#from nltk.corpus import *
+#cfd = nltk.ConditionalFreqDist(brown.tagged_words(categories='news'))
+#most_freq_words = fd.keys()[:100]
+
+class cluster:
+    def __init__(self, seed, words):
+        self.seed = seed
+        self.words = words
+    def merge(self, cluster):
+       self.seed += "-" + cluster.seed
+       self.words += cluster.words
+
+
+# list of k clusters V
+def getTopic(text):
+    text = nltk.Text(nltk.word_tokenize(text))
+    clusters = [cluster(seed, nltk.similar(seed)) for seed in text]
+    print clusters
