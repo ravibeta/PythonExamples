@@ -214,10 +214,45 @@ class cluster:
     def merge(self, cluster):
        self.seed += "-" + cluster.seed
        self.words += cluster.words
-
+    def seed(self):
+        return seed
+    def words(self):
+        return words
 
 # list of k clusters V
 def getTopic(text):
     text = nltk.Text(nltk.word_tokenize(text))
     clusters = [cluster(seed, nltk.similar(seed)) for seed in text]
     print clusters
+    from collections import deque
+    queue = deque(clusters)
+    matches = []
+    newclusters = []
+    previousCount = clusters.count() + 1
+    while (clusters.count() > 0 and clusters.count() < previousCount):
+        for i, c in enumerate(clusters):
+            for j, d in enumerate(clusters):
+                if ( i != j & c.seed in d.word):
+                    merged = false
+                    for n in newclusters:
+                        if (c.seed in n.seed):
+                            n.merge(c)
+                            merged = true
+                            break;
+                        if (d.seed in n.seed):
+                            n.merge(d)
+                            merged = true
+                            break;
+                    if not merged:
+                        newclusters.append(c.merge(d))
+                    matches.append(c)
+                    matches.append(d)
+        previousCount = clusters.count()
+        r = set(matches)
+        while(r.count > 0):
+            for c in r:
+                clusters.remove(r)
+    if (newclusters.count() > 0):
+        return newclusters[0].seed
+    if (clusters.count() > 0):
+        return clusters[0].seed
