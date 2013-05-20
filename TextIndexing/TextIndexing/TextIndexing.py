@@ -178,7 +178,8 @@ def indexText(text):
     print occur[most_freq_words.pop()[0]]
     print "----------------"
 
-indexText('Clustering and Segmentation. Clustering is a data mining technique that is directed towards the goals of identification and classification. Clustering tries to identify a finite set of categories or clusters to which each data object (tuple) can be mapped. The categories may be disjoint or overlapping and may sometimes be organized into trees. For example, one might form categories of customers into the form of a tree and then map each customer to one or more of the categories. A closely related problem is that of estimating multivariate probability density functions of all variables that could be attributes in a relation or from different relations.')
+sampleText = 'Clustering and Segmentation. Clustering is a data mining technique that is directed towards the goals of identification and classification. Clustering tries to identify a finite set of categories or clusters to which each data object (tuple) can be mapped. The categories may be disjoint or overlapping and may sometimes be organized into trees. For example, one might form categories of customers into the form of a tree and then map each customer to one or more of the categories. A closely related problem is that of estimating multivariate probability density functions of all variables that could be attributes in a relation or from different relations.'
+#indexText(sampleText)
 
 #from nltk.corpus import brown
 # suffix_fdist = nltk.FreqDist()
@@ -220,16 +221,23 @@ class cluster:
         return words
 
 # list of k clusters V
+
+import nltk
+import nltk.text
+import nltk.corpus
+
 def getTopic(text):
-    text = nltk.Text(nltk.word_tokenize(text))
-    clusters = [cluster(seed, nltk.similar(seed)) for seed in text]
+    index = nltk.text.ContextIndex([word.lower( ) for word in nltk.corpus.brown.words( )])
+    # filter stop words 
+    stop = open('stopwords.txt').read()
+    clusters = [cluster(seed, index.similar_words(seed)) for seed in nltk.word_tokenize(text) if seed not in stop]
     print clusters
     from collections import deque
     queue = deque(clusters)
     matches = []
     newclusters = []
-    previousCount = clusters.count() + 1
-    while (clusters.count() > 0 and clusters.count() < previousCount):
+    previousCount = len(clusters) + 1
+    while (len(clusters) > 0 and len(clusters) < previousCount):
         for i, c in enumerate(clusters):
             for j, d in enumerate(clusters):
                 if ( i != j & c.seed in d.word):
@@ -247,12 +255,13 @@ def getTopic(text):
                         newclusters.append(c.merge(d))
                     matches.append(c)
                     matches.append(d)
-        previousCount = clusters.count()
+        previousCount = len(clusters)
         r = set(matches)
-        while(r.count > 0):
+        while(len(r) > 0):
             for c in r:
                 clusters.remove(r)
-    if (newclusters.count() > 0):
+    if (len(newclusters) > 0):
         return newclusters[0].seed
-    if (clusters.count() > 0):
+    if (len(clusters) > 0):
         return clusters[0].seed
+getTopic(sampleText)
