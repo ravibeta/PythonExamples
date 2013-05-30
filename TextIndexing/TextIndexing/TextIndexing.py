@@ -264,4 +264,4 @@ def getTopic(text):
         return newclusters[0].seed
     if (len(clusters) > 0):
         return clusters[0].seed
-getTopic(sampleText)
+# getTopic(sampleText)
