@@ -265,3 +265,9 @@ def getTopic(text):
     if (len(clusters) > 0):
         return clusters[0].seed
 # getTopic(sampleText)
+l = ["abc", "def", "ghi", "jkl"]
+clusters = [cluster(seed, l) for seed in l]
+index = nltk.text.ContextIndex([word.lower( ) for word in nltk.corpus.brown.words( )])
+print index.similar_words("clustering")
+
+
