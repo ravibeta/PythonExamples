@@ -150,9 +150,24 @@ def updateWordProbabilty(category, word, isMatch):
 
 import nltk.classify
 import nltk.cluster
+import nltk.corpus
+import random
+
+from nltk.corpus import brown
+documents = [(list(brown.words(fileid)), category)
+             for category in brown.categories()
+             for fileid in brown.fileids(category)]
+random.shuffle(documents)
+
+all_words = nltk.FreqDist(w.lower() for w in brown.words())
+word_features = all_words.keys()[:2000]
 
 def document_features(document):
-     return dict([('contains-word(%s)' % w, True) for w in document])
+    document_words = set(document)
+    features = {}
+    for word in word_features:
+        features['contains(%s)' % word] = (word in document_words)
+    return features
 
 def classify(documents, words):
     featuresets = [(document_features(d), c) for (d,c) in documents]
