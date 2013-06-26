@@ -278,7 +278,7 @@ def getTopic2(text):
     stop = open('stopwords.txt').read()
     l = []
     src = [w.strip(" .,?!") for w in nltk.word_tokenize(text.lower()) if w not in stop]
-    candidates = nltk.FreqDist(w for w in src if w.__len__ > 3)
+    candidates = nltk.FreqDist(w for w in src if len(w) > 3)
     candidates = candidates.keys()[:10]
 
     # initialize vectors
@@ -288,12 +288,12 @@ def getTopic2(text):
     vectors = [array(l)]
 
     # initialize the clusterer 
-    clusterer = nltk.cluster.util.VectorSpaceClusterer()
-    clusterer.cluster(vectors)
+    clusterer = nltk.cluster.kmeans.KMeansClusterer(10, euclidean_distance)
+    clusterer.cluster(vectors, True)
 
     #pick the one closest to the center of the largest
-    o = [(clusterer.classify(l.index(i)), l.index(i)) for i in range(l.count)]
+    o = [(clusterer.classify(l.index(i)), l.index(i)) for i in range(len(l))]
     o.reverse()
     print o.pop().index(1)
 
-#getTopic2(sampleText)
+getTopic2(sampleText)
