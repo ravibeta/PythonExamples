@@ -270,6 +270,7 @@ def getTopic(text):
 
 import nltk.corpus
 from nltk.text import TextCollection
+from nltk.cluster import euclidean_distance
 from nltk import cluster
 from numpy import array
 
