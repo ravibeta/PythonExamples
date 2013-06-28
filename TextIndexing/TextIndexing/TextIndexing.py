@@ -293,7 +293,9 @@ def getTopic2(text):
     clusterer.cluster(vectors, True)
 
     #pick the one closest to the center of the largest
-    o = [(clusterer.classify(l.index(i)), l.index(i)) for i in range(len(l))]
+    clusterer.Means().Max()
+    o = [l for l in clusterer.Means()]
+    #o = [(clusterer.classify(l.index(i)), l.index(i)) for i in range(len(l))]
     o.reverse()
     print o.pop().index(1)
 
