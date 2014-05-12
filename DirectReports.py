@@ -5,13 +5,13 @@ class Employee:
 		self.name = name
     
 # sample data
-E = [Employee(1, 0, 'ABC'), Employee(2, 1, 'DEF'), Employee(3, 1, 'GHI')]
+#E = [Employee(1, 0, 'ABC'), Employee(2, 1, 'DEF'), Employee(3, 1, 'GHI')]
+E = [Employee(1, 0, 'ABC'), Employee(4,0,'IJK'), Employee(2, 1, 'DEF'), Employee(5,4,'MNO'), Employee(3, 1, 'GHI')]
 
-
-def directReportsBFS(E):
+def directReportsBFS(E,s):
 	Q = []
 	level = 0
-	[Q.append(e) for e in E if e.mgrId == 0]
+	Q.append(s)
 	while (len(Q) > 0):
 		c = Q.pop(0)
 		if c is None:
@@ -21,5 +21,6 @@ def directReportsBFS(E):
 		print 'Name:' + c.name + ' Level:' + str(level) + ' Reports:' +"[{0}]".format(", ".join(str(r.name) for r in Reports))
 		Q.append(None)
 		all(Q.append(report) for report in Reports)
-		
-directReportsBFS(E)	
+
+
+[directReportsBFS(E,e) for e in E if e.mgrId == 0]
