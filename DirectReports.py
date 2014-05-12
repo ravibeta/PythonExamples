@@ -18,7 +18,7 @@ def directReportsBFS(E):
 			level = level + 1
 			continue
 		Reports = [e for e in E if e.mgrId == c.id]
-		print 'Name:' + c.name + ' Level:' + str(c.level) + ' Reports:' +"[{0}]".format(", ".join(str(r.name) for r in Reports))
+		print 'Name:' + c.name + ' Level:' + str(level) + ' Reports:' +"[{0}]".format(", ".join(str(r.name) for r in Reports))
 		Q.append(None)
 		all(Q.append(report) for report in Reports)
 		
