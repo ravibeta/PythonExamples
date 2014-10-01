@@ -1,0 +1,1 @@
+Placeholder for text keyword extraction using simulated annealing optimization technique
