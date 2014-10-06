@@ -7,6 +7,39 @@ import sys
 from splunklib.modularinput import *
 
 class CeilometerIntegrationScript(Script):
+
+
+SCHEME = """<scheme>
+    <title>Ceilometer Telemetry</title>
+    <description>Get data from Ceilometer.</description>
+    <use_external_validation>true</use_external_validation>
+    <streaming_mode>xml</streaming_mode>
+
+    <endpoint>
+        <args>
+            <arg name="msg">
+                <title>Message from a publishing sample</title>
+                <description> This is typically the meter message from counter that pertains to a sample from pipeline
+                </description>
+            </arg>
+
+            <arg name="secret">
+                <title>Metering Secret</title>
+                <description>This is the publisher secret </description>
+            </arg>
+
+            <arg name="secret_key">
+                <title>Secret key</title>
+                <description>Your Amazon secret key.</description>
+            </arg>
+        </args>
+    </endpoint>
+</scheme>
+"""
+
+    def do_scheme():
+         print SCHEME
+
     def get_scheme(self):
         scheme = Scheme("Ceilometer Telemetry")
 
@@ -15,14 +48,18 @@ class CeilometerIntegrationScript(Script):
         scheme.use_single_instance = True
         scheme.validation = ""
 
+        ceilometer_argument = Argument("data_from_ceilometer")
+        ceilometer_argument.data_type = Argument.data_type_string
+        ceilometer_argument.description = "Telemetry data from Ceilometer to be produced by this input."
+        ceilometer_argument.required_on_create = True
+
         return scheme
 
     def validate_input(self, validation_definition):
-        minimum = float(validation_definition.parameters["min"])
-        maximum = float(validation_definition.parameters["max"])
+        data = str(validation_definition.parameters["data_from_ceilometer"])
 
-        if minimum >= maximum:
-            raise ValueError("min must be less than max; found min=%f, max=%f" % minimum, maximum)
+        if not data:
+            raise ValueError("Ceilometer data could not be read.")
 
     def stream_events(self, inputs, ew):
         """This function handles all the action: splunk calls this modular input
@@ -30,19 +67,18 @@ class CeilometerIntegrationScript(Script):
         :param inputs: an InputDefinition object
         :param ew: an EventWriter object
         """
-        # Go through each input for this modular input
         for input_name, input_item in inputs.inputs.iteritems():
-            # Get the values, cast them as floats
-            minimum = float(input_item["min"])
-            maximum = float(input_item["max"])
 
             # Create an Event object, and set its data fields
             event = Event()
             event.stanza = input_name
-            event.data = "number=\"%s\"" % str(random.uniform(minimum, maximum))
+            event.data = "number=\"%s\"" % str(input_item["data_from_ceilometer"])
 
             # Tell the EventWriter to write this event
             ew.write_event(event)
 
-if __name__ == "__main__":
-    sys.exit(CeilometerIntegrationScript().run(sys.argv))
+    if __name__ == "__main__":
+	if len(sys.argv) > 1:
+            if sys.argv[1] == "--scheme":
+               do_scheme()
+        sys.exit(CeilometerIntegrationScript().run(sys.argv))
