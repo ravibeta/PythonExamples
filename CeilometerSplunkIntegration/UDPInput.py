@@ -26,16 +26,30 @@ SCHEME = """<scheme>
             <arg name="secret">
                 <title>Metering Secret</title>
                 <description>This is the publisher secret </description>
+                <validation>
+validate(match('ssn', '^\s{15}$'), "Secret is not in valid format")
+</validation>
             </arg>
 
-            <arg name="secret_key">
-                <title>Secret key</title>
-                <description>Your Amazon secret key.</description>
+            <arg name="host">
+                <title>IPv4 address of host</title>
+                <description>This is the host that receives the Ceilometer data</description>
+                <validation>
+validate(match(host, '(?<ip>[[(?:2(?:5[0-5]|[0-4][0-9])|[0-1][0-9][0-9]|[0-9][0-9]?)]](?:\.[[ (?:2(?:5[0-5]|[0-4][0-9])|[0-1][0-9][0-9]|[0-9][0-9]?)]]){3}), "host is not in valid format")
+</validation>
             </arg>
+
+            <arg name="port">
+                <title>UDP port</title>
+                <description>This is the port on which the host is listening</description>
+                <validation>is_avail_udp_port(port) </validation>
+            </arg>
+
         </args>
     </endpoint>
 </scheme>
 """
+
 
     def do_scheme():
          print SCHEME
