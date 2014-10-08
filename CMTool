@@ -1,0 +1,160 @@
+This is a Configuration Management tool for a Cluster with OneFS ranging in size of filesystem from 18TB to 15.5 PB that's easy to manage with no RAIDs, LUNs, etc. and easy to grow is the target of the configuration. Minimum system configuration is a cluster with three nodes, two infiniband switches, the same version of OneFS, licenses for different modules. Common tasks involve upgrade, deployment, verification etc. cfengine deployment for host, and cfagent runs from cron for each node is the practice. Management API exists for OneFS 7.1.1  A traditional backup is an example use case. An NFS file system is mounted to a backup server or client and then a native backup is done. A large scale file system could mean multiple backups and parallel tree traversals.  The latter can take a long time. 7.1.1 API allows the creation of changelist that addresses latter.
+
+
+Sample program to create a web API based administration session, create an NFS export and create a snapshot.
+
+
+# import relevant libraries
+
+import json
+
+import urllib
+
+#  for data = urllib.urlopen(url, params).read()
+
+import httplib2
+
+http = httplib2.Http()
+
+# for http.request(url) instead of authenticated urlopen
+
+
+# setup
+
+api_user = 'Your api username'
+
+api_pass = 'Your api password'
+
+
+# create session
+
+url = 'https://<cluster-ip-or-host-name>:8080/session/1/session'
+
+params = urllib.urlencode({
+
+'username': api_user,
+
+'password': api_pass,
+
+'services': ['NFS','Snapshot']
+
+})
+
+http.add_credentials(api_user, api_pass)
+
+response, content = http.request(url, 'POST', params,
+
+headers={'Content-type': 'application/x-www-form-urlencoded'}
+
+)
+
+
+# validate
+
+url = url + '?isisessid'
+
+http.add_credentials(api_user, api_pass)response,content = http.request(url)
+
+data = json.loads(response.json())
+
+if data["username"] != api_user:
+
+   raise Error('bad session')
+
+
+#create nfs export
+
+url = 'https://<cluster-ip-or-host-name>:8080/platform/1/protocols/nfs/exports'
+
+params = urllib.urlencode({
+
+'description': 'sample mount',
+
+'paths': ['/path','/path1'] # under /ifs
+
+})
+
+http.add_credentials(api_user, api_pass)
+
+response, content = http.request(url, 'POST', params,
+
+headers={'Content-type': 'application/x-www-form-urlencoded'}
+
+)
+
+data = json.loads(response.json())
+
+if not data["id"] :
+
+   raise Error('bad export')
+
+
+# validate
+
+id = data['id']
+
+url = 'https://<cluster-ip-or-host-name>:8080/platform/1/protocols/nfs/exports/' + id + '?describe'
+
+http.add_credentials(api_user, api_pass)
+
+response,content = http.request(url)
+
+data = json.loads(response.json())
+
+if not data["id"] :
+
+   raise Error('bad export')
+
+
+#create a snapshot
+
+url = 'https://<cluster-ip-or-host-name>:8080/platform/1/snapshot/snapshots'
+
+params = urllib.urlencode({
+
+'name': 'sample snapshot',
+
+'path': '/ifs'
+
+})
+
+http.add_credentials(api_user, api_pass)
+
+response, content = http.request(url, 'POST', params,
+
+headers={'Content-type': 'application/x-www-form-urlencoded'}
+
+)
+
+data = json.loads(response.json())
+
+if not data["id"] :
+
+   raise Error('bad snapshot')
+
+
+# validate
+
+id = data['id']
+
+url = 'https://<cluster-ip-or-host-name>:8080/platform/1/snapshot/snapshots/' + id + '?describe'
+
+http.add_credentials(api_user, api_pass)
+
+response,content = http.request(url)
+
+data = json.loads(response.json())
+
+if not data["created"] :
+
+   raise Error('bad snapshot')
+
+
+from datetime import datetime, timedelta
+
+createddate = datetime.strptime(data['created'])
+
+if  datetime.now  - createddate >  timedelta(hours=2):
+
+    raise Error('old snapshot')
+
