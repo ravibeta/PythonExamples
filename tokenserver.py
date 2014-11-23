@@ -7,7 +7,7 @@ from flask import render_template, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import gen_salt
 from flask_oauthlib.provider import OAuth2Provider
-
+from tokenprovider import TokenProvider
 
 app = Flask(__name__, template_folder='templates')
 app.debug = True
