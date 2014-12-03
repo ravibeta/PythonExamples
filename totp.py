@@ -21,4 +21,4 @@ class OneTimePasswordAlgorithm:
          while (len(result) < codeDigits):
              result = "0" + result
          return result
-~                         
+                       
