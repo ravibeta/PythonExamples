@@ -41,4 +41,18 @@ def hcluster(rows,distance=tanimoto):
        clust.append(newcluster)
     return clust[0]
 
+
+def tanimoto(v1, v2):
+    c1, c2, shr = 0,0,0
+    
+    for i in range(len(v1)):
+      if v1[i] != 0: c1 += 1 # in v1
+      if v2[i] != 0: c2 += 1 # in v2
+      if v1[i] != 0 and v2[i] != 0: shr += 1 # in both
+
+    d = c1 + c2 - shr 
+    if d == 0:
+            d = 1
+
+    return 1.0 - (float(shr)/d)
 #Courtesy: Book on Programming Collective Intelligence By Toby Segaran
