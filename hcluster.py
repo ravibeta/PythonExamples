@@ -9,7 +9,8 @@ class bicluster:
 def hcluster(rows,distance=tanimoto):
     distances={}
     currentclustid=-1
-    
+    if len(rows) == 0:
+       return None
     # Clusters are initially just the rows
     clust=[bicluster(rows[i],id=i) for i in range(len(rows))]
     while len(clust)>1:
