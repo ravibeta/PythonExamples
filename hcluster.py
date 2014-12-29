@@ -1,5 +1,5 @@
 class bicluster:
-    def __init_ _(self,vec,left=None,right=None,distance=0.0,id=None):
+    def __init__(self,vec,left=None,right=None,distance=0.0,id=None):
         self.left=left 
         self.right=right
         self.vec=vec
@@ -20,12 +20,12 @@ def hcluster(rows,distance=tanimoto):
        for i in range(len(clust)):
            for j in range(i+1,len(clust)):
            # distances is the cache of distance calculations
-           if (clust[i].id,clust[j].id) not in distances:
-              distances[(clust[i].id,clust[j].id)]=distance(clust[i].vec,clust[j].vec)
-           d=distances[(clust[i].id,clust[j].id)]
-           if d<closest:
-              closest=d
-              lowestpair=(i,j)
+              if (clust[i].id,clust[j].id) not in distances:
+                 distances[(clust[i].id,clust[j].id)]=distance(clust[i].vec,clust[j].vec)
+              d=distances[(clust[i].id,clust[j].id)]
+              if d<closest:
+                 closest=d
+                 lowestpair=(i,j)
        # calculate the average of the two clusters
        mergevec=[
        (clust[lowestpair[0]].vec[i]+clust[lowestpair[1]].vec[i])/2.0
