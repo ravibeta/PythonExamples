@@ -1,0 +1,37 @@
+{% extends "reminders.html" %}
+{% load staticfiles %}
+{% block title %}Reminders - List{% endblock %}
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<img src="{% static "images/site-logo.png" %}"  width="10%" height="10%">
+<h2>Reminders</h2>
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Term</th>
+            <th>ResourceId</th>
+            <th>Purpose</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    <tbody>
+     {% for item in models %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.term }}</td>
+            <td>{{ item.resource.guid }}</td>
+            <td>{{ item.purpose }}</td>
+            <td><a href="/delete/?ID={{ item.id }}">Delete</a></td>
+        </tr>
+     {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
