@@ -39,7 +39,7 @@ class ModelTestCase(TestCase, SharedTestMixin):
         reminder_request_data = {'term':1, 'email':'rajamani@adobe.com'}
         auth_headers = {
         }
-        response = self.client.post(reverse('metric-list'), data=reminder_request_data, **auth_headers)
+        response = self.client.post('/add', data=reminder_request_data, **auth_headers)
         print('post returned'+repr(response.content))
         self.assertEqual(response.status_code, 200)
         r = json.loads(response.content.decode("utf-8"))
