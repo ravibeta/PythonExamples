@@ -10,7 +10,7 @@ import uuid
 #    def get_object(self, pk):
 #        return super(LeaseManager, self).select_related().get(Q(pk=pk) & ~Q(status='D')) 
 
-
+'''
 class Metric(models.Model):
     id = models.AutoField(primary_key=True)
     label = models.CharField(max_length=50, null=False, default='UNKNOWN')
@@ -25,4 +25,4 @@ class Metric(models.Model):
     class Meta:
         managed = True
         app_label = 'api'
-
+'''

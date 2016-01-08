@@ -10,7 +10,7 @@ try:
     import urllib.parse as urllib
 except ImportError:
     import urllib
-import httplib2
+#import httplib2
 import os
 import uuid
 from django.core import serializers
@@ -19,8 +19,8 @@ from django.shortcuts import render
 from rest_framework import exceptions, filters, generics, status, viewsets
 from rest_framework.decorators import detail_route, api_view
 from rest_framework.response import Response
-from models import Metric
-from serializers import MetricSerializer
+#from models import Metric
+#from serializers import MetricSerializer
 import logging
 import datetime
 logging.basicConfig()
@@ -28,11 +28,11 @@ logger = logging.getLogger(__name__)
 
 user=''
 password=''
-http = httplib2.Http(".cache", disable_ssl_certificate_validation=True)
-http.add_credentials(user, password)
+#http = httplib2.Http(".cache", disable_ssl_certificate_validation=True)
+#http.add_credentials(user, password)
 auth = base64.encodestring(user + ':' + password)
 
-
+'''
 class MetricViewSet(viewsets.GenericViewSet):
   queryset = Metric.objects.all()
   serializer_class = MetricSerializer
@@ -88,9 +88,29 @@ class MetricViewSet(viewsets.GenericViewSet):
         return HttpResponse(json.dumps({'status':'success',
               'msg':'added',
               }))
-   
+'''   
+'''
+Sample post
+{
+  "Type" : "Notification",
+  "MessageId" : "22b80b92-fdea-4c2c-8f9d-bdfb0c7bf324",
+  "TopicArn" : "arn:aws:sns:us-west-2:123456789012:MyTopic",
+  "Subject" : "My First Message",
+  "Message" : "Hello world!",
+  "Timestamp" : "2012-05-02T00:54:06.655Z",
+  "SignatureVersion" : "1",
+  "Signature" : "EXAMPLEw6JRNwm1LFQL4ICB0bnXrdB8ClRMTQFGBqwLpGbM78tJ4etTwC5zU7O3tS6tGpey3ejedNdOJ+1fkIp9F2/LmNVKb5aFlYq+9rk9ZiPph5YlLmWsDcyC5T+Sy9/umic5S0UQc2PEtgdpVBahwNOdMW4JPwk0kAJJztnc=",
+  "SigningCertURL" : "https://sns.us-west-2.amazonaws.com/SimpleNotificationService-f3ecfb7224c7233fe7bb5f59f96de52f.pem",
+  "UnsubscribeURL" : "https://sns.us-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-west-2:123456789012:MyTopic:c9135db0-26c4-47ec-8998-413945fb5a96"
+  }
+'''
 def add(request):
-    logger.info('add metric='+str(request.POST);
+    logger.info('add metric='+str(request.POST))
+    msgType = None
+    msgType = request.META.get('HTTP_x_amz_sns_message_type')
+    if msgType == 'Notification':
+       #add metric
+       pass
     return HttpResponse(json.dumps({'status':'success',
               'msg':'added',
               }))
