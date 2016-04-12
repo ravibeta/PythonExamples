@@ -23,9 +23,9 @@ issue_dict = {
 issue = jira.create_issue(fields=issue_dict)
 
 # Find all comments made by Atlassians on this issue.
-import re
-atl_comments = [comment for comment in issue.fields.comment.comments
-                if re.search(r'seemq-admin@xyz.com$', comment.author.emailAddress)]
+#import re
+#atl_comments = [comment for comment in issue.fields.comment.comments
+#                if re.search(r'seemq-admin@xyz.com$', comment.author.emailAddress)]
 
 ###
 ###   Message Broker processing
@@ -41,7 +41,7 @@ channel = connection.channel()
 
 channel.basic_publish('seemq_exchange',
                       'seemq_routing_key',
-                      'JIRA ID: 123 - message body value',   ############           Integration
+                      'JIRA ID 123 - 001 : message body value',   ############           Integration
                       pika.BasicProperties(content_type='text/plain',
                                            delivery_mode=1))
 
@@ -54,7 +54,7 @@ jira.add_comment(issue, 'Message Queue activity mentioned here')
 issue.update(labels=['AAA', 'BBB'])
 
 # Resolve the issue and assign it to 'pm_user' in one step
-jira.transition_issue(issue, '5', fields: {'assignee':{'name': 'pm_user'}, 'resolution':{'id': '3'}})
+#jira.transition_issue(issue, '5', fields: {'assignee':{'name': 'pm_user'}, 'resolution':{'id': '3'}})
 
 # For more involved access to JIRA issues, use JIRA native REST API like so
 # curl request to http://jira-server/rest/api/latest/issue/ABC-123
