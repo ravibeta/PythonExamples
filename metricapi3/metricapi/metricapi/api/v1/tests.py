@@ -36,7 +36,7 @@ class ModelTestCase(TestCase, SharedTestMixin):
         self.assertTrue(True)
 
     def test_create_reminder(self):
-        reminder_request_data = {'term':1, 'email':'rajamani@adobe.com'}
+        reminder_request_data = {'term':1, 'email':'rajamani@myinc.com'}
         auth_headers = {
         }
         response = self.client.post(reverse('add), data=reminder_request_data, **auth_headers)

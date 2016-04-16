@@ -120,7 +120,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-EMAIL_HOST = 'europemail.eur.adobe.com'
+EMAIL_HOST = 'smtpserver.myinc.com'
 
 
 STATIC_URL = '/static/'
