@@ -66,7 +66,7 @@ class BackupService:
            self.logger.info(repr(content))
            #'<App_GenericResponse><response errorCode="0"/></App_GenericResponse>'
         else:
-           raise exceptions.MethodNotAllowed(method='create', detail='Backup server returned:' + str(content))
+           raise exceptions.MethodNotAllowed(method='delete', detail='Backup server returned:' + str(content))
         self.logger.info("End setting BackupRequest Attributes before delete")
 
     def update(self, * args, ** kwargs):
@@ -78,7 +78,7 @@ class BackupService:
 
 
    def getToken():
-        self.logger.info("Start setting BackupRequest Attributes before modify")
+        self.logger.info("Start setting Login attributes for token")
         url = '/SearchSvc/CVWebService.svc/Login'
         host = commvaultapi.settings.CVSERVER
         headers={"Content-Type": "application/xml", "Accept": "application/xml"}
@@ -95,7 +95,10 @@ class BackupService:
         logger.info('status='+repr(status)+' content=' + repr(content))
         if ((str(response.status_code) == '200') or (str(response.status_code) == '201')):
            self.logger.info(repr(content))
-           #'<App_GenericResponse><response errorCode="0"/></App_GenericResponse>'
+           import xml.etree.ElementTree as ET
+           root = ET.fromstring(content)
+           if 'token' in root.attrib:
+             print("token: " + root.attrib["token"])
         else:
-           raise exceptions.MethodNotAllowed(method='create', detail='Backup server returned:' + str(content))
-        self.logger.info("End setting BackupRequest Attributes before modify")
+           raise exceptions.MethodNotAllowed(method='login', detail='Backup server returned:' + str(content))
+        self.logger.info("End setting Login Attributes for token")
