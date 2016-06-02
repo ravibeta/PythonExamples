@@ -8,6 +8,7 @@ except:
    import urllib
 
 from rest_framework import exceptions
+import commvaultapi.settings
 
 class BackupService:
 
@@ -21,7 +22,7 @@ class BackupService:
         backup = kwargs.pop("backup")
         backup.modified = datetime.now()
         url = '/SearchSvc/CVWebService.svc/Backupset'
-        host = '10.5.254.43'
+        host = commvaultapi.settings.CVSERVER
         headers = 'application/xml'
         #get token
         Authtoken = ''
@@ -51,8 +52,9 @@ class BackupService:
         backup = kwargs.pop("backup")
         backup.modified = datetime.now()
         url = '/SearchSvc/CVWebService.svc/Backupset/' + backup.location
-        host = '10.5.254.43'
-        headers = 'application/xml'
+        host = commvaultapi.settings.CVSERVER
+        params = ''
+        headers={"Content-Type": "application/xml", "Accept": "application/xml", "Authtoken" : Authtoken}
         #get token
         Authtoken = ''
         import requests
@@ -62,7 +64,7 @@ class BackupService:
         logger.info('status='+repr(status)+' content=' + repr(content))
         if ((str(response.status_code) == '200') or (str(response.status_code) == '201')):
            self.logger.info(repr(content))
-           '<App_GenericResponse><response errorCode="0"/></App_GenericResponse>'
+           #'<App_GenericResponse><response errorCode="0"/></App_GenericResponse>'
         else:
            raise exceptions.MethodNotAllowed(method='create', detail='Backup server returned:' + str(content))
         self.logger.info("End setting BackupRequest Attributes before delete")
@@ -72,4 +74,28 @@ class BackupService:
         #print('MODIFY')
         backup = kwargs.pop("backup")
         backup.modified = datetime.now()
+        self.logger.info("End setting BackupRequest Attributes before modify")
+
+
+   def getToken():
+        self.logger.info("Start setting BackupRequest Attributes before modify")
+        url = '/SearchSvc/CVWebService.svc/Login'
+        host = commvaultapi.settings.CVSERVER
+        headers={"Content-Type": "application/xml", "Accept": "application/xml"}
+        cvuser = commvaultapi.settings.CVUSER
+        cvpwd = commvaultapi.settings.CVPWD
+        cvapp = commvaultapi.settings.CVAPP
+        param = '<DM2ContentIndexing_CheckCredentialReq mode="Webconsole" username="' + cvuser + '" password="' + cvpwd + '" commserver="' + host + '*' + cvapp + '" />'
+        #get token
+        Authtoken = ''
+        import requests
+        response = requests.post(url, headers=headers, data=params, verify=False)
+        status = response.status_code
+        content = response.text
+        logger.info('status='+repr(status)+' content=' + repr(content))
+        if ((str(response.status_code) == '200') or (str(response.status_code) == '201')):
+           self.logger.info(repr(content))
+           #'<App_GenericResponse><response errorCode="0"/></App_GenericResponse>'
+        else:
+           raise exceptions.MethodNotAllowed(method='create', detail='Backup server returned:' + str(content))
         self.logger.info("End setting BackupRequest Attributes before modify")

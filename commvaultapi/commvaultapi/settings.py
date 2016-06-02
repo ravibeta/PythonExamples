@@ -113,6 +113,14 @@ VCOUSER = parser.get('vco', 'vco_user')
 print ('VCOUSER=' + VCOUSER)
 VCOPWD = parser.get('vco', 'vco_pwd')
 print ('VCOPWD=' + VCOPWD)
+CVSERVER = parser.get('commvault', 'commvault_server')
+print ('CVSERVER=' + CVSERVERURL)
+CVUSER = parser.get('commvault', 'commvault_user')
+print ('CVUSER' + CVUSER)
+CVPWD = parser.get('commvault', 'commvault_pwd')
+print ('CVPWD=' + CVPWD)
+CVAPP = parser.get('commvault', 'commvault_app')
+print ('CVAPP=' + CVAPP)
 
 
 #if 'test' in os.sys.argv:
