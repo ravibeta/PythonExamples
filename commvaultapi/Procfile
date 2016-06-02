@@ -1,0 +1,1 @@
+web: gunicorn backupapi.wsgi --workers=2 --reload --timeout 120 --access-logfile=- --log-level=ERROR -c gunicorn.conf
