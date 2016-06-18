@@ -21,11 +21,11 @@ class BackupService:
         #print('CREATE')
         backup = kwargs.pop("backup")
         backup.modified = datetime.now()
-        url = '/SearchSvc/CVWebService.svc/Backupset'
         host = commvaultapi.settings.CVSERVER
+        url = 'http://' + host + '/SearchSvc/CVWebService.svc/Backupset?'
         headers = 'application/xml'
         #get token
-        Authtoken = ''
+        Authtoken = self.getToken()
         params = '<App_CreateBackupSetRequest><association><entity><appName>Virtual Server</appName><backupsetName>' + backup.name + '</backupsetName><clientName>client001</clientName><instanceName>' + backup.server + '</instanceName><subclientName>default</subclientName></entity></association></App_CreateBackupSetRequest>';
         self.logger.info('url='+url+',params='+repr(params))
         headers={"Content-Type": "application/xml", "Accept": "application/xml", "Authtoken" : Authtoken}
@@ -33,7 +33,7 @@ class BackupService:
         response = requests.post(url, headers=headers, data=params, verify=False)
         status = response.status_code
         content = response.text
-        logger.info('status='+repr(status)+' content=' + repr(content))
+        self.logger.info('status='+repr(status)+' content=' + repr(content))
         if ((str(response.status_code) == '200') or (str(response.status_code) == '201')):
            #content = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?><App_GenericResponse><response errorCode="0"><entity _type_="ROOT_ENTITY" applicationId="33" backupsetId="931" clientId="2" clientSidePackage="true" consumeLicense="true" srmReportSet="0" srmReportType="0" type="GALAXY"/></response></App_GenericResponse>'
            import xml.etree.ElementTree as ET
@@ -51,17 +51,17 @@ class BackupService:
         #print('DELETE')
         backup = kwargs.pop("backup")
         backup.modified = datetime.now()
-        url = '/SearchSvc/CVWebService.svc/Backupset/' + backup.location
         host = commvaultapi.settings.CVSERVER
+        url = 'http://' + host + '/SearchSvc/CVWebService.svc/Backupset?' + backup.location
         params = ''
         headers={"Content-Type": "application/xml", "Accept": "application/xml", "Authtoken" : Authtoken}
         #get token
-        Authtoken = ''
+        Authtoken = self.getToken()
         import requests
         response = requests.post(url, headers=headers, data=params, verify=False)
         status = response.status_code
         content = response.text
-        logger.info('status='+repr(status)+' content=' + repr(content))
+        self.logger.info('status='+repr(status)+' content=' + repr(content))
         if ((str(response.status_code) == '200') or (str(response.status_code) == '201')):
            self.logger.info(repr(content))
            #'<App_GenericResponse><response errorCode="0"/></App_GenericResponse>'
@@ -75,30 +75,34 @@ class BackupService:
         backup = kwargs.pop("backup")
         backup.modified = datetime.now()
         self.logger.info("End setting BackupRequest Attributes before modify")
-
-
-   def getToken():
+    
+    
+    def getToken(self):
+        token = ''
         self.logger.info("Start setting Login attributes for token")
-        url = '/SearchSvc/CVWebService.svc/Login'
+        url = 'SearchSvc/CVWebService.svc/Login?'
         host = commvaultapi.settings.CVSERVER
+        url = 'http://' + host + '/SearchSvc/CVWebService.svc/Login'
         headers={"Content-Type": "application/xml", "Accept": "application/xml"}
         cvuser = commvaultapi.settings.CVUSER
         cvpwd = commvaultapi.settings.CVPWD
         cvapp = commvaultapi.settings.CVAPP
-        param = '<DM2ContentIndexing_CheckCredentialReq mode="Webconsole" username="' + cvuser + '" password="' + cvpwd + '" commserver="' + host + '*' + cvapp + '" />'
+        params = '<DM2ContentIndexing_CheckCredentialReq mode="Webconsole" username="' + cvuser + '" password="' + cvpwd + '" commserver="' + host + '*' + cvapp + '" />'
         #get token
         Authtoken = ''
         import requests
         response = requests.post(url, headers=headers, data=params, verify=False)
         status = response.status_code
         content = response.text
-        logger.info('status='+repr(status)+' content=' + repr(content))
+        self.logger.info('status='+repr(status)+' content=' + repr(content))
         if ((str(response.status_code) == '200') or (str(response.status_code) == '201')):
            self.logger.info(repr(content))
            import xml.etree.ElementTree as ET
            root = ET.fromstring(content)
            if 'token' in root.attrib:
-             print("token: " + root.attrib["token"])
+             token = root.attrib["token"]
+             print("token: " + token)
         else:
            raise exceptions.MethodNotAllowed(method='login', detail='Backup server returned:' + str(content))
         self.logger.info("End setting Login Attributes for token")
+        return token

@@ -47,15 +47,15 @@ class BackupRequestViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         hostname = serializer.data["server"]
         owner = serializer.data["owner"] #'rajamani' # request.user
-        location = ''
+        #location = ''
         print('data='+serializer.data["server"])
         print('serializer='+repr(serializer))
-        if hostname:
-           vmdks = find_image(hostname, owner)
-           if len(vmdks) > 0:
-              location = vmdks[0]
+        #if hostname:
+        #   vmdks = find_image(hostname, owner)
+        #   if len(vmdks) > 0:
+        #      location = vmdks[0]
         #print(repr(self.request.user))
-        serializer.save(owner=owner, location=location)
+        serializer.save(owner=owner) #, location=location)
 
     def list(self, request):
         owner='rajamani'

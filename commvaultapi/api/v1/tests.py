@@ -37,22 +37,55 @@ class BackupTestCase(TestCase):
                   output = self.invokeDBCmd(line)
                   print(str(output))
 
-    def test_create_backup(self):
-        print('start test create backup')
+    def test_create_model(self):
+        print('start test create model')
         self.client = APIClient()
-        self.url = '/backup/v1/create'
+        self.url = '/backup/v1/exports' #reverse('backup-create')
         self.client.force_authenticate(user=None)
-        response = self.client.post(self.url, {"hostname": "foo.com"})
+        response = self.client.post(self.url, {
+                   "name": "sj1010005254041-Backup1",
+                   "region":"us-west-1",
+                   "platform":"VMWare",
+                   "server": "sj1010005254041.corp.adobe.com",
+                   "owner": "somebody"})
         print('response='+repr(response.content))
-        self.assertEqual(str(response.status_code), "200") #status.HTTP_200_OK
-        print('end test create backup')
+        self.assertEqual(str(response.status_code), "201") #status.HTTP_200_OK
+        self.url = reverse('backup-list')
+        self.client.force_authenticate(user=None)
+        response = self.client.get(self.url, {"hostname": "sj1010005254041.corp.adobe.com"})
+        print('response='+repr(response.content))
+        import json
+        items = json.loads(response.content.decode("utf-8"))
+        print(items)
+        self.assertEqual(items["count"], 1)
+        self.assertTrue(items["results"][0]["location"] != "")
+        print('end test create model')
 
-    def test_delete_backup(self):
-        print('start test delete backup')
+    def test_delete_model(self):
+        print('start test delete model')
+        self.test_create_model()
         self.client = APIClient()
-        self.url = '/backup/v1/delete'
+        self.url = '/backup/v1/exports' #reverse('backup-create')
         self.client.force_authenticate(user=None)
-        response = self.client.post(self.url, {"hostname": "foo.com"})
+        self.url = reverse('backup-list')
+        self.client.force_authenticate(user=None)
+        response = self.client.get(self.url, {"hostname": "sj1010005254041.corp.adobe.com"})
         print('response='+repr(response.content))
-        self.assertEqual(str(response.status_code), "200") #status.HTTP_200_OK
-        print('end test delete backup')
+        import json
+        items = json.loads(response.content.decode("utf-8"))
+        print(items)
+        self.assertEqual(items["count"], 1)
+        id = items["results"][0]["id"]
+        self.assertTrue(int(id) > 0)
+        response = self.client.delete(self.url+ "/"+str(id))
+        print('response='+repr(response.content))
+        self.assertEqual(str(response.status_code), "204") #status.HTTP_200_OK
+        self.url = reverse('backup-list')
+        self.client.force_authenticate(user=None)
+        response = self.client.get(self.url, {"hostname": "sj1010005254041.corp.adobe.com"})
+        print('response='+repr(response.content))
+        import json
+        items = json.loads(response.content.decode("utf-8"))
+        print(items)
+        self.assertEqual(items["count"], 0)
+        print('end test delete model')
