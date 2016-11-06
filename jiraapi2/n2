@@ -1,0 +1,2 @@
+CREATE TABLE api_jirarequest(`id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,`receiver` VARCHAR(128) NOT NULL,`sender`  VARCHAR(128) NOT NULL,`cc`  VARCHAR(128),`bcc`  VARCHAR(128),`subject`  VARCHAR(128),`message`  VARCHAR(128),`digest_hash` VARCHAR(128) NOT NULL,`user_name` VARCHAR(128),`created` datetime DEFAULT NULL,`modified` datetime NOT NULL,`status` VARCHAR(8) NOT NULL);
+
