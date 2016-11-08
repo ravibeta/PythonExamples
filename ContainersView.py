@@ -30,7 +30,7 @@ class ContainerViewSet(viewsets.GenericViewSet):
     RESULT:  returns JSON with all containers
   """
   def list(self, request):
-      containers = all()
+      containers = self.all()
       return containers
 
   def all(self):
