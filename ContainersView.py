@@ -31,6 +31,7 @@ class ContainerViewSet(viewsets.GenericViewSet):
   """
   def list(self, request):
       containers = all()
+      return containers
 
   def all(self):
       containers = []
@@ -45,3 +46,4 @@ class ContainerViewSet(viewsets.GenericViewSet):
                   container["STATE"] = parts[1]
                   container["IPV4"] = parts[2]
                   containers.append(container)
+      return containers
