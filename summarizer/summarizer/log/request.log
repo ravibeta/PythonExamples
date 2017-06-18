@@ -1,0 +1,200 @@
+Internal Server Error: /metric/v1/add
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/core/urlresolvers.py", line 394, in urlconf_module
+    return self._urlconf_module
+AttributeError: 'RegexURLResolver' object has no attribute '_urlconf_module'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.5/base64.py", line 518, in _input_type_check
+    m = memoryview(s)
+TypeError: memoryview: a bytes-like object is required, not 'str'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/core/handlers/base.py", line 108, in get_response
+    response = middleware_method(request)
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/middleware/common.py", line 74, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/core/urlresolvers.py", line 647, in is_valid_path
+    resolve(path, urlconf)
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/core/urlresolvers.py", line 522, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/core/urlresolvers.py", line 366, in resolve
+    for pattern in self.url_patterns:
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/core/urlresolvers.py", line 402, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/core/urlresolvers.py", line 396, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "/usr/lib/python3.5/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 986, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 665, in exec_module
+  File "<frozen importlib._bootstrap>", line 222, in _call_with_frames_removed
+  File "/home/ubuntu/metricapi/metricapi/urls.py", line 20, in <module>
+    url(r'^metric/', include('api.urls')),
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/lib/python3.5/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 986, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 665, in exec_module
+  File "<frozen importlib._bootstrap>", line 222, in _call_with_frames_removed
+  File "/home/ubuntu/metricapi/api/urls.py", line 4, in <module>
+    url(r'^v1/', include('api.v1.urls')),
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/conf/urls/__init__.py", line 33, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/lib/python3.5/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 986, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 969, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 958, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 673, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 665, in exec_module
+  File "<frozen importlib._bootstrap>", line 222, in _call_with_frames_removed
+  File "/home/ubuntu/metricapi/api/v1/urls.py", line 3, in <module>
+    from . import views
+  File "/home/ubuntu/metricapi/api/v1/views.py", line 33, in <module>
+    auth = base64.encodestring(user + ':' + password)
+  File "/usr/lib/python3.5/base64.py", line 547, in encodestring
+    return encodebytes(s)
+  File "/usr/lib/python3.5/base64.py", line 535, in encodebytes
+    _input_type_check(s)
+  File "/usr/lib/python3.5/base64.py", line 521, in _input_type_check
+    raise TypeError(msg) from err
+TypeError: expected bytes-like object, not str
+INFO 2017-06-18 03:01:14,987 views 8555 140093704300288 add metric=<QueryDict: {}>
+INFO 2017-06-18 03:10:24,989 views 8555 140093704300288 add metric=<QueryDict: {}>
+INFO 2017-06-18 03:15:51,038 views 8555 140093704300288 add metric=<QueryDict: {}>
+INFO 2017-06-18 03:25:15,526 views 9317 140554792855296 add metric=<QueryDict: {'text': ['Hello World']}>
+Internal Server Error: /metric/v1/add
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/metricapi/api/v1/views.py", line 109, in add
+    logger.info('text='+str(request.data.get('text','')))
+AttributeError: 'WSGIRequest' object has no attribute 'data'
+INFO 2017-06-18 03:26:30,395 views 9351 140475171292928 add metric=<QueryDict: {'text': ['Hello World']}>
+Internal Server Error: /metric/v1/add
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/metricapi/api/v1/views.py", line 116, in add
+    from textselector import test_build_counts, test_find_closest
+ImportError: No module named 'textselector'
+INFO 2017-06-18 03:30:12,186 views 9388 140514111092480 add metric=<QueryDict: {'text': ['Hello World']}>
+INFO 2017-06-18 03:48:48,319 views 9388 140514111092480 add metric=<QueryDict: {'text': ['Hello World'], 'submitmsg': ['Summarize']}>
+INFO 2017-06-18 04:38:42,714 views 9388 140514093942528 add metric=<QueryDict: {'usermsg': ['Hello World']}>
+INFO 2017-06-18 04:51:15,432 views 9388 140514093942528 add metric=<QueryDict: {'text': ['hello world!']}>
+INFO 2017-06-18 04:57:52,126 views 9388 140514093942528 add metric=<QueryDict: {}>
+INFO 2017-06-18 04:58:32,307 views 9388 140514093942528 add metric=<QueryDict: {}>
+INFO 2017-06-18 05:20:16,660 views 9868 140479600666368 add metric=<QueryDict: {'text': ['Hello World']}>
+Internal Server Error: /metric/v1/add
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/Django-1.8-py3.5.egg/django/core/handlers/base.py", line 132, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/metricapi/api/v1/views.py", line 123, in add
+    summary = summarize(text)
+  File "/home/ubuntu/gensim/gensim/summarization/summarizer.py", line 203, in summarize
+    raise ValueError("input must have more than one sentence")
+ValueError: input must have more than one sentence
+INFO 2017-06-18 05:43:22,770 views 9964 140521747109632 add metric=<QueryDict: {'text': ['Hello World']}>
+INFO 2017-06-18 05:43:22,771 views 9964 140521747109632 summary='input must have more than one sentence'
+INFO 2017-06-18 05:43:50,947 views 9964 140521747109632 add metric=<QueryDict: {'text': ['Hello World.Hello World.Hello World.Hello World.']}>
+INFO 2017-06-18 05:43:50,947 views 9964 140521747109632 summary='input must have more than one sentence'
+INFO 2017-06-18 05:44:59,143 views 9964 140521747109632 add metric=<QueryDict: {'text': ['Hello World\nHello World\n\nHello World\nHello World.']}>
+INFO 2017-06-18 05:44:59,144 views 9964 140521747109632 summary='Hello World'
+INFO 2017-06-18 05:47:08,030 views 10201 140142481180416 add metric=<QueryDict: {'text': ['Hello World.Hello World.Hello World.Hello World.']}>
+INFO 2017-06-18 05:47:08,069 views 10201 140142481180416 summary='Hello World'
+INFO 2017-06-18 07:38:37,335 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 07:38:37,335 views 10201 140142481180416 summary=None
+INFO 2017-06-18 07:39:29,013 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 07:39:29,013 views 10201 140142481180416 summary=None
+INFO 2017-06-18 07:41:23,308 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 07:41:23,308 views 10201 140142481180416 summary=None
+INFO 2017-06-18 07:52:52,806 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 07:52:52,806 views 10201 140142481180416 summary=None
+INFO 2017-06-18 08:00:31,073 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 08:00:31,073 views 10201 140142481180416 summary=None
+INFO 2017-06-18 08:28:41,049 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 08:28:41,252 views 10201 140142481180416 summary=None
+INFO 2017-06-18 08:34:10,971 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 08:34:10,972 views 10201 140142481180416 summary=None
+INFO 2017-06-18 08:36:26,117 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 08:36:26,118 views 10201 140142481180416 summary=None
+INFO 2017-06-18 08:37:17,875 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 08:37:17,875 views 10201 140142481180416 summary=None
+INFO 2017-06-18 08:38:01,966 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 08:38:01,966 views 10201 140142481180416 summary=None
+INFO 2017-06-18 08:40:37,990 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 08:40:37,990 views 10201 140142481180416 summary=None
+INFO 2017-06-18 08:50:16,550 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 08:50:16,550 views 10201 140142481180416 summary=None
+INFO 2017-06-18 08:50:35,475 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 08:50:35,475 views 10201 140142481180416 summary=None
+INFO 2017-06-18 09:06:39,270 views 10201 140142481180416 add metric=<QueryDict: {}>
+INFO 2017-06-18 09:06:39,271 views 10201 140142481180416 summary=None
+INFO 2017-06-18 09:11:19,987 views 12817 139771441653504 add metric=<QueryDict: {}>
+INFO 2017-06-18 09:11:19,988 views 12817 139771441653504 summary=None
+INFO 2017-06-18 09:19:45,762 views 12817 139771441653504 add metric=<QueryDict: {}>
+INFO 2017-06-18 09:19:45,762 views 12817 139771441653504 summary=None
+INFO 2017-06-18 09:30:27,301 views 13101 140391871198976 add metric=<QueryDict: {'text': ['Hello World\nHello World\n\nHello World\nHello World.']}>
+INFO 2017-06-18 09:30:27,302 views 13101 140391871198976 summary='Hello World'
+INFO 2017-06-18 09:30:27,584 views 13101 140391871198976 add metric=<QueryDict: {'text': ['Hello World\nHello World\n\nHello World\nHello World.']}>
+INFO 2017-06-18 09:30:27,585 views 13101 140391871198976 summary='Hello World'
+INFO 2017-06-18 09:31:19,212 views 13101 140391871198976 add metric=<QueryDict: {}>
+INFO 2017-06-18 09:31:19,290 views 13101 140391871198976 summary=None
+INFO 2017-06-18 09:31:53,458 views 13101 140391871198976 add metric=<QueryDict: {}>
+INFO 2017-06-18 09:31:53,459 views 13101 140391871198976 summary=None
+INFO 2017-06-18 09:32:19,241 views 13101 140391871198976 add metric=<QueryDict: {}>
+INFO 2017-06-18 09:32:19,242 views 13101 140391871198976 summary=None
+INFO 2017-06-18 09:38:50,463 views 13203 140272516314880 add metric=<QueryDict: {'text': ['Hello World.\r\nHello World.\r\n']}>
+INFO 2017-06-18 09:38:50,464 views 13203 140272516314880 summary='Hello World'
+INFO 2017-06-18 09:50:56,185 views 13284 139891312686848 add metric=<QueryDict: {}>
+INFO 2017-06-18 09:50:56,185 views 13284 139891312686848 summary=None
+INFO 2017-06-18 09:51:41,741 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hello World\nHello World\n\nHello World\nHello World.']}>
+INFO 2017-06-18 09:51:41,824 views 13284 139891312686848 summary='Hello World'
+INFO 2017-06-18 09:51:42,114 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hello World\nHello World\n\nHello World\nHello World.']}>
+INFO 2017-06-18 09:51:42,114 views 13284 139891312686848 summary='Hello World'
+INFO 2017-06-18 09:58:21,264 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hello World.\r\nHello World.']}>
+INFO 2017-06-18 09:58:21,265 views 13284 139891312686848 summary='Hello World'
+INFO 2017-06-18 09:59:08,605 views 13284 139891312686848 add metric=<QueryDict: {'text': ['World Hello.\r\nWorld Hello.\r\n']}>
+INFO 2017-06-18 09:59:08,642 views 13284 139891312686848 summary='World Hello'
+INFO 2017-06-18 10:02:50,819 views 13284 139891312686848 add metric=<QueryDict: {'text': ['World Mighty.\r\nWorld Mighty.']}>
+INFO 2017-06-18 10:02:50,942 views 13284 139891312686848 summary='World Mighty'
+INFO 2017-06-18 10:09:20,469 views 13284 139891312686848 add metric=<QueryDict: {'text': ['World Mighty2\r\nWorld Mighty2']}>
+INFO 2017-06-18 10:09:20,470 views 13284 139891312686848 summary='World Mighty2'
+INFO 2017-06-18 10:10:33,244 views 13284 139891312686848 add metric=<QueryDict: {'text': ['World Mighty2\r\nWorld Mighty2']}>
+INFO 2017-06-18 10:10:33,245 views 13284 139891312686848 summary='World Mighty2'
+INFO 2017-06-18 10:12:15,978 views 13284 139891312686848 add metric=<QueryDict: {'text': ['World Mighty2\r\nWorld Mighty2']}>
+INFO 2017-06-18 10:12:16,018 views 13284 139891312686848 summary='World Mighty2'
+INFO 2017-06-18 10:12:56,437 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Worl Mighty2.\r\nWorl Mighty2.']}>
+INFO 2017-06-18 10:12:56,437 views 13284 139891312686848 summary='Worl Mighty2'
+INFO 2017-06-18 10:17:48,348 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hello World.\r\nHello World.']}>
+INFO 2017-06-18 10:17:48,385 views 13284 139891312686848 summary='Hello World'
+INFO 2017-06-18 10:18:36,340 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hello World.\r\nHello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World. Good Morning. Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n                                                                                                                                  ']}>
+INFO 2017-06-18 10:18:36,464 views 13284 139891312686848 summary='Hello World'
+INFO 2017-06-18 10:18:46,453 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hello World.\r\nHello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World.Hello World. Good Morning. Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.Good Morning.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n                                                                                                                                  ']}>
+INFO 2017-06-18 10:18:46,613 views 13284 139891312686848 summary='Hello World'
+INFO 2017-06-18 10:21:11,314 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hi Baby! How are you ? \r\nHi Baby! How are you ? \r\nHi Baby! How are you ? Hi Baby! How are you ? Hi Baby! How are you ? \r\nHi Baby! How are you ? ']}>
+INFO 2017-06-18 10:21:11,315 views 13284 139891312686848 summary='Hi Baby! How are you ? '
+INFO 2017-06-18 10:21:27,639 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hi Baby! How are you ? \r\nHi Baby! How are you ? \r\nHi Baby! How are you ? Hi Baby! How are you ? Hi Baby! How are you ? \r\nHi Baby! How are you ? ']}>
+INFO 2017-06-18 10:21:27,640 views 13284 139891312686848 summary='Hi Baby! How are you ? '
+INFO 2017-06-18 10:22:48,100 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hi Baby! How are you ? \r\nHi Baby! How are you ? \r\nHi Baby! How are you ? Hi Baby! How are you ? Hi Baby! How are you ? \r\nHi Baby! How are you ? ']}>
+INFO 2017-06-18 10:22:48,138 views 13284 139891312686848 summary='Hi Baby! How are you ? '
+INFO 2017-06-18 10:23:08,875 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hello World.\r\nHello World.']}>
+INFO 2017-06-18 10:23:08,876 views 13284 139891312686848 summary='Hello World'
+INFO 2017-06-18 10:23:44,411 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hello World.\r\nHello World.']}>
+INFO 2017-06-18 10:23:44,449 views 13284 139891312686848 summary='Hello World'
+INFO 2017-06-18 10:40:18,398 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hello World!\r\nHello World!']}>
+INFO 2017-06-18 10:40:18,561 views 13284 139891312686848 summary='Hello World!'
+INFO 2017-06-18 10:47:10,568 views 13284 139891312686848 add metric=<QueryDict: {'text': ['Hello Mighty!\r\nHello Mighty!\r\n']}>
+INFO 2017-06-18 10:47:10,569 views 13284 139891312686848 summary='Hello Mighty!'
