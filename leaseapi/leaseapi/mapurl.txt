@@ -1,2 +1,0 @@
-http://docs.splunk.com/Documentation/Splunk/6.2.3/Security/MapLDAPgroupsanduserstoSplunkroles
-

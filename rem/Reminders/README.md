@@ -1,2 +1,0 @@
-# Reminders
-app for reminders 

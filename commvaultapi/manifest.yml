@@ -1,7 +1,0 @@
-applications:
-- name: commvaultapi
-  instances: 1
-  memory: 128M
-  command: null
-cf_stacks:
-- lucid64
