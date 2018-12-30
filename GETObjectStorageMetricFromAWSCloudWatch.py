@@ -48,8 +48,8 @@ request_parameters += '            "Name": "BucketName",'
 request_parameters += '            "Value": "ExampleBucket"'
 request_parameters += '        }'
 request_parameters += '    ],'
-request_parameters += '    "StartTime": 1545711762,'
-request_parameters += '    "EndTime":  1545970962,'
+request_parameters += '    "StartTime": 1545884562,'
+request_parameters += '    "EndTime":  1545884662,'
 #request_parameters += '    "StartTime": 2018-12-25T23:00:00Z,'
 #request_parameters += '    "EndTime": 2018-12-27T23:00:00Z,'
 request_parameters += '    "Period": 86400,'
@@ -183,7 +183,7 @@ print(r.text)
 
 
 """
-{    "Action": "GetMetricStatistics",     "Namespace": "On-PremiseObjectStorageMetrics",    "MetricName": "BucketSizeBytes",    "Dimensions": [        {            "Name": "BucketName",            "Value": "ExampleBucket"        }    ],    "StartTime": 1545711762,    "EndTime":  1545970962,    "Period": 86400,    "Statistics": [        "Average"    ],    "Unit": "Bytes"}
+{    "Action": "GetMetricStatistics",     "Namespace": "On-PremiseObjectStorageMetrics",    "MetricName": "BucketSizeBytes",    "Dimensions": [        {            "Name": "BucketName",            "Value": "ExampleBucket"        }    ],    "StartTime": 1545884562,    "EndTime": 1545884662,    "Period": 86400,    "Statistics": [        "Average"    ],    "Unit": "Bytes"}
 
 BEGIN REQUEST++++++++++++++++++++++++++++++++++++
 Request URL = https://monitoring.us-east-1.amazonaws.com
@@ -191,7 +191,7 @@ Request URL = https://monitoring.us-east-1.amazonaws.com
 RESPONSE++++++++++++++++++++++++++++++++++++
 Response code: 200
 
-{"Datapoints":[{"Average":1.024E12,"Timestamp":1.54588452E9,"Unit":"Bytes"},{"Average":1.024E12,"Timestamp":1.54579812E9,"Unit":"Bytes"}],"Label":"BucketSizeBytes"}
+{"Datapoints":[{"Average":1.024E12,"Timestamp":1.54588452E9,"Unit":"Bytes"}],"Label":"BucketSizeBytes"}
 aws cloudwatch get-metric-statistics --metric-name BucketSizeBytes --start-time 2018-12-25T23:00:00 --end-time 2018-12-27T23:00:00 --period 86400 --namespace On-PremiseObjectStorageMetrics --statistics Average --dimensions Name=BucketName,Value=ExampleBucket
 {
     "Label": "BucketSizeBytes",
